@@ -38,7 +38,7 @@ cd mtmr-2026-touchbar-setup
 ./install.sh
 ```
 
-`install.sh` builds the helpers, installs Modbar to `/Applications`, builds the power apps, backs up your existing `items.json`, installs this one, and pins the power apps in the MTMR dock. Then quit and reopen MTMR 2026.
+`install.sh` builds the helpers, installs Modbar to `/Applications` and adds it to your login items so it starts at login, builds the power apps, backs up your existing `items.json`, installs this one, and pins the power apps in the MTMR dock. Then quit and reopen MTMR 2026.
 
 Don't run `install.sh` on top of a config you care about without reading it first. It overwrites `items.json` (a timestamped backup is kept).
 
@@ -56,6 +56,8 @@ macOS ties these grants to the app's code signature. An ad-hoc signature changes
 
 If Modbar doesn't appear in the Accessibility list, quit System Settings, then drag the app from `/Applications` into the list instead of using the `+` button.
 
+Modbar starts automatically at login. To stop that, remove `MTMR Modbar` under System Settings → General → Login Items.
+
 ## Troubleshooting MTMR 2026
 
 - **MTMR 2026 keeps asking for Accessibility** even though it's switched on. Check `codesign --verify --deep --strict "/Applications/MTMR 2026.app"`. If it says "not signed at all", the bundled `Sparkle.framework` may have lost its symlinks (copied without preserving them). Restore `Versions/Current -> B` and the top-level symlinks, then re-sign with `codesign --force --deep --sign - --identifier com.mtmr-designer.mtmr2026 "/Applications/MTMR 2026.app"`, reset its permission with `tccutil reset Accessibility com.mtmr-designer.mtmr2026`, and grant it again.
@@ -68,7 +70,6 @@ If Modbar doesn't appear in the Accessibility list, quit System Settings, then d
 - Spaces, brightness and the modal Touch Bars use private APIs (SkyLight, DisplayServices, `presentSystemModalTouchBar`) and may break on macOS updates.
 - Spaces switching works on the main display only.
 - Clipboard history is in memory only, text and images, max 30 items, and clears when Modbar restarts. Items marked concealed or transient (password managers) are skipped.
-- Modbar does not start at login. Add it under System Settings → General → Login Items.
 
 ## Layout
 

@@ -41,6 +41,9 @@ echo "==> Pinning power apps in the MTMR dock"
 defaults write com.mtmr-designer.mtmr2026 com.toxblh.mtmr.dock.persistent -array \
   com.mtmrsetup.power.lock com.mtmrsetup.power.sleep com.mtmrsetup.power.restart com.mtmrsetup.power.shutdown
 
+echo "==> Adding Modbar to login items"
+osascript -e 'tell application "System Events" to if not (exists login item "MTMR Modbar") then make login item at end with properties {path:"/Applications/MTMR Modbar.app", hidden:true, name:"MTMR Modbar"}' || echo "   (could not add the login item; add it in System Settings > General > Login Items)"
+
 open "$MODBAR_APP"
 echo
 echo "Done. Quit and reopen MTMR 2026, then grant Modbar its permissions (see README)."
