@@ -9,10 +9,10 @@ Built and used on a MacBook Pro with a Touch Bar running macOS 26. It uses priva
 **Main bar (MTMR config, `config/items.json`)**
 - App dock (collapsed list, and an expanded "All" view)
 - Lock / Sleep / Restart / Shut Down pinned in the dock as tiny apps (Restart and Shut Down ask for confirmation)
-- Centered now-playing item for **YouTube and YouTube Music in Brave or Chrome**, with a text progress line
+- Centered now-playing item for **YouTube and YouTube Music in Brave or Chrome**, with a title and a text progress bar made of vertical lines (heavier = played, one thick line = now, thin = still to play)
 - Previous / next, volume and brightness buttons with custom SF Symbol icons
 
-**`seekbar/`**: tap the now-playing item to get a real draggable seek slider (system-modal Touch Bar). Long-press plays/pauses.
+**`seekbar/`**: tap the now-playing item to get a draggable seek view (system-modal Touch Bar): blue lines for what's played, one bright white line for the current position, faint white for what's left, plus title and time. Long-press the item to play/pause.
 
 **`volhud/`**: changes volume or brightness instantly and shows a small Liquid Glass overlay at the top right. Repeated presses update in place without blinking.
 
@@ -66,7 +66,8 @@ Modbar starts automatically at login. To stop that, remove `MTMR Modbar` under S
 
 ## Limits
 - Now playing only reads YouTube / YouTube Music tabs in Brave or Chrome. Chrome/Brave need View → Developer → Allow JavaScript from Apple Events.
-- The progress line is text. MTMR 2026 can't set font size or draw two rows.
+- The always-visible progress bar is text (one color; MTMR 2026 can't color part of a title, change font size or draw two rows). Only the tap-to-seek overlay is colored.
+- Titles containing `|` are handled; very long titles are truncated.
 - Spaces, brightness and the modal Touch Bars use private APIs (SkyLight, DisplayServices, `presentSystemModalTouchBar`) and may break on macOS updates.
 - Spaces switching works on the main display only.
 - Clipboard history is in memory only, text and images, max 30 items, and clears when Modbar restarts. Items marked concealed or transient (password managers) are skipped.
